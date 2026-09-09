@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORUM | PERFUMERÍA HUD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@200;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-base: #000000; 
+            --blue-mid: #1c456b;
+            --blue-light: #7ca8d4;
+            --blue-bright: #b8deff;
+            
+            --text-main: #ffffff;
+            --tech-line: rgba(124, 168, 212, 0.3);
+            --tech-glow: rgba(124, 168, 212, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-transform: uppercase;
+        }
+
+        html, body {
+            width: 100vw;
+            max-width: 100%;
+            min-height: 100vh;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           FONDO ESPACIAL PARALLAX (ECLIPSE)
+           ========================================= */
+        .scifi-background {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1;
+            background: radial-gradient(circle at 50% 50%, #01040a 0%, #000000 100%);
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        /* Campo de Estrellas CSS Puro */
+        .starfield {
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background-image: 
+                radial-gradient(2px 2px at 10% 20%, #fff, transparent),
+                radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 60% 10%, rgba(133, 200, 242, 0.9), transparent),
+                radial-gradient(1.5px 1.5px at 80% 70%, #fff, transparent),
+                radial-gradient(1px 1px at 20% 80%, rgba(133, 200, 242, 0.5), transparent),
+                radial-gradient(2.5px 2.5px at 90% 30%, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 45% 90%, #fff, transparent),
+                radial-gradient(2px 2px at 75% 50%, rgba(184, 222, 255, 0.9), transparent);
+            background-size: 200px 200px;
+            opacity: 0.6;
+        }
+
+        /* Corona de Luz (Aura Azul detrás del planeta) */
+        .planet-corona {
+            position: absolute;
+            bottom: -35vw; left: -10vw;
+            width: 120vw; height: 120vw;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 0%, 
+                rgba(184, 222, 255, 0.8) 0%, 
+                rgba(124, 168, 212, 0.4) 20%, 
+                rgba(28, 69, 107, 0.15) 40%, 
+                transparent 65%);
+            filter: blur(60px);
+            animation: pulseCorona 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseCorona {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* Planeta Gigante (Efecto Eclipse) */
+        .giant-planet {
+            position: absolute;
+            bottom: -45vw; left: -5vw;
+            width: 110vw; height: 110vw;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 0%, #02060f 0%, #000000 60%);
+            box-shadow: 
+                inset 0 35px 80px rgba(124, 168, 212, 0.4),
+                inset 0 5px 15px rgba(184, 222, 255, 0.8),
+                0 -20px 100px rgba(0,0,0,0.9);
+            overflow: hidden;
+        }
+
+        /* Textura topográfica para el planeta */
+        .planet-texture {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            opacity: 0.25; mix-blend-mode: overlay;
+        }
+
+        /* Asteroides flotantes */
+        .asteroid {
+            position: absolute;
+            background: #010204;
+            border-radius: 40% 60% 50% 40%;
+            box-shadow: inset 3px 5px 15px rgba(124, 168, 212, 0.4);
+        }
+        .ast-1 { width: 45px; height: 40px; top: 15%; left: 20%; filter: blur(2px); transform: rotate(25deg); }
+        .ast-2 { width: 120px; height: 90px; top: 40%; right: 40%; filter: blur(6px); border-radius: 60% 40% 30% 70%; transform: rotate(-15deg); }
+        .ast-3 { width: 25px; height: 30px; bottom: 35%; left: 45%; filter: blur(1px); transform: rotate(50deg); }
+
+        /* Grano global de la interfaz */
+        .scifi-background::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 100% 4px; pointer-events: none;
+        }
+
+        /* LUZ DEL CURSOR */
+        .cursor-light {
+            position: fixed; width: 40vw; height: 40vw;
+            background: radial-gradient(circle, rgba(124, 168, 212, 0.15) 0%, transparent 60%);
+            border-radius: 50%; pointer-events: none; filter: blur(40px);
+            z-index: 2; transform: translate(-50%, -50%); transition: opacity 0.3s ease;
+        }
+
+        /* =========================================
+           HUD OVERLAYS Y GRÁFICOS
+           ========================================= */
+        .hud-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 3; pointer-events: none; }
+
+        .radar-grid {
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(var(--tech-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--tech-line) 1px, transparent 1px);
+            background-size: 50px 50px; opacity: 0.05;
+        }
+
+        .hud-line-v { position: absolute; top: 0; left: 50%; width: 1px; height: 100vh; background: var(--tech-line); }
+        .hud-line-h { position: absolute; top: 12%; left: 0; width: 100vw; height: 1px; background: var(--tech-line); }
+        .crosshair { position: absolute; color: var(--blue-light); font-family: 'Space Mono', monospace; font-size: 1.2rem; line-height: 0; }
+        .ch-1 { top: 12%; left: 4%; transform: translate(-50%, 50%); }
+        .ch-2 { top: 12%; right: 4%; transform: translate(50%, 50%); }
+        .ch-3 { top: 12%; left: 50%; transform: translate(-50%, 50%); }
+        
+        .screen-corner { position: absolute; width: 30px; height: 30px; border: 2px solid var(--tech-line); }
+        .sc-tl { top: 20px; left: 20px; border-bottom: none; border-right: none; }
+        .sc-tr { top: 20px; right: 20px; border-bottom: none; border-left: none; }
+        .sc-bl { bottom: 20px; left: 20px; border-top: none; border-right: none; }
+        .sc-br { bottom: 20px; right: 20px; border-top: none; border-left: none; }
+
+        .sf-data { position: absolute; font-family: 'Space Mono', monospace; font-size: 0.5rem; color: rgba(124, 168, 212, 0.8); letter-spacing: 0.1em; }
+        .sf-1 { top: 30px; left: 60px; }
+        .sf-2 { top: 30px; right: 60px; text-align: right; }
+        .sf-3 { bottom: 30px; left: 60px; }
+
+        .tech-font { font-family: 'Space Mono', monospace; }
+        .title-font { font-family: 'Orbitron', sans-serif; font-weight: 700; }
+
+        /* =========================================
+           CONTENIDO PRINCIPAL
+           ========================================= */
+        .content-layer { position: relative; z-index: 10; display: flex; width: 100vw; min-height: 100vh; }
+
+        /* PANEL IZQUIERDO */
+        .left-pane {
+            width: 50%; position: fixed; top: 0; left: 0; height: 100vh;
+            display: flex; flex-direction: column; padding: 3rem 4rem; pointer-events: none; 
+        }
+        .left-pane > * { pointer-events: auto; }
+
+        .top-nav {
+            display: flex; justify-content: space-between; font-size: 0.6rem;
+            letter-spacing: 0.1em; color: rgba(255,255,255,0.9); margin-bottom: 5vh;
+        }
+        .top-nav div { line-height: 1.4; }
+
+        .logo-r-star {
+            position: absolute; top: 2rem; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 40px; border: 1px solid var(--blue-light); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(1, 4, 10, 0.9); color: var(--blue-light);
+            box-shadow: 0 0 15px rgba(124, 168, 212, 0.5);
+        }
+        .logo-r-star span { position: relative; top: 1px; }
+        .logo-r-star sup { font-size: 0.6rem; position: absolute; top: 5px; right: 5px; }
+
+        .giant-text {
+            font-size: 5vw; line-height: 1.1; letter-spacing: 0.02em; margin-top: 5vh; margin-bottom: 2rem;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8); display: flex; flex-direction: column;
+        }
+        .giant-text span:nth-child(2) { color: var(--blue-light); padding-left: 10%; }
+
+        .tech-subtitle {
+            font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.05em;
+            color: var(--blue-light); display: flex; align-items: center; gap: 10px; margin-bottom: 2rem;
+        }
+        .tech-subtitle::after { content: ""; flex-grow: 1; height: 1px; background: var(--tech-line); }
+
+        .tech-paragraph {
+            font-size: 0.65rem; line-height: 1.6; letter-spacing: 0.05em; color: rgba(255,255,255,0.8);
+            max-width: 60%; font-family: 'Inter', sans-serif; font-weight: 200;
+            border-left: 2px solid var(--blue-light); padding-left: 1rem;
+        }
+
+        /* BOTÓN FLOTANTE WHATSAPP */
+        .floating-wa {
+            position: absolute; bottom: 3rem; left: 4rem;
+            background: rgba(1, 4, 10, 0.85); backdrop-filter: blur(15px);
+            border: 1px solid var(--blue-light); color: var(--blue-light); text-decoration: none; 
+            font-size: 0.7rem; font-family: 'Space Mono', monospace; letter-spacing: 0.1em; 
+            padding: 1.2rem 2rem; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 0 15px rgba(124, 168, 212, 0.2);
+        }
+        .floating-wa:hover { background: var(--blue-light); color: #000; box-shadow: 0 0 25px rgba(124, 168, 212, 0.6); }
+        .floating-wa::before { content: "💬"; font-size: 1.2rem; }
+
+        /* =========================================
+           PANEL DERECHO: CATÁLOGO SCI-FI
+           ========================================= */
+        .right-pane {
+            width: 50%; margin-left: 50%; background: rgba(1, 4, 10, 0.45); 
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            padding: 4rem; min-height: 100vh; border-left: 1px solid var(--tech-line);
+        }
+
+        .search-section-title {
+            font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--blue-bright);
+            letter-spacing: 0.15em; margin-bottom: 2rem; margin-top: 5vh; display: flex; align-items: center;
+        }
+
+        .search-container { width: 100%; margin-bottom: 4rem; position: relative; }
+        
+        .input-wrapper { position: relative; display: flex; align-items: center; border-bottom: 1px solid var(--tech-line); transition: all 0.3s ease; }
+        .input-wrapper:hover, .input-wrapper:focus-within { border-color: var(--blue-light); box-shadow: 0 1px 10px rgba(124, 168, 212, 0.3); }
+
+        .search-icon { width: 18px; height: 18px; color: var(--blue-light); margin-right: 10px; flex-shrink: 0;}
+
+        .search-input {
+            width: 100%; padding: 1rem 1rem 1rem 0; background: transparent; border: none;
+            color: var(--text-main); font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; outline: none;
+        }
+        .search-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+        .select-wrapper { position: relative; width: 100%; margin-top: 1rem; display: flex; align-items: center; border-bottom: 1px solid var(--tech-line); transition: all 0.3s ease; }
+        .select-wrapper:hover, .select-wrapper:focus-within { border-color: var(--blue-light); box-shadow: 0 1px 10px rgba(124, 168, 212, 0.3); }
+        .filter-icon { width: 18px; height: 18px; color: var(--blue-light); margin-right: 10px; flex-shrink: 0;}
+
+        .casa-select {
+            width: 100%; padding: 1rem 1rem 1rem 0; background: transparent;
+            border: none; color: var(--text-main); font-family: 'Space Mono', monospace;
+            font-size: 0.75rem; letter-spacing: 0.1em; outline: none; cursor: pointer; appearance: none;
+        }
+        .casa-select option { background: var(--bg-base); color: var(--text-main); padding: 10px; }
+        .select-wrapper::after { content: "▼"; position: absolute; right: 10px; font-size: 0.6rem; color: var(--blue-light); pointer-events: none; }
+
+        /* GRID DEL CATÁLOGO */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 4rem 3rem; }
+
+        .card {
+            display: flex; flex-direction: column; position: relative;
+            background: rgba(255,255,255,0.02); border: 1px solid var(--tech-line);
+            padding: 2.5rem 2rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card::before, .card::after { content: ''; position: absolute; width: 10px; height: 10px; border: 1px solid transparent; transition: all 0.3s ease; }
+        .card::before { top: -1px; left: -1px; border-top-color: var(--blue-light); border-left-color: var(--blue-light); }
+        .card::after { bottom: -1px; right: -1px; border-bottom-color: var(--blue-light); border-right-color: var(--blue-light); }
+        
+        .card:hover {
+            background: rgba(28, 69, 107, 0.2); border-color: var(--blue-light);
+            transform: translateY(-8px); box-shadow: 0 0 35px rgba(124, 168, 212, 0.45), inset 0 0 20px rgba(28, 69, 107, 0.4);
+        }
+
+        /* HOLOGRAMA SCI-FI DE FONDO */
+        .original-bottle-bg {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 70px; height: auto; max-height: 110px; object-fit: contain;
+            opacity: 0.15; filter: grayscale(100%) contrast(150%) brightness(1.2);
+            z-index: 1; transition: all 0.4s ease; pointer-events: none;
+        }
+        .card:hover .original-bottle-bg { opacity: 0.5; filter: grayscale(20%) contrast(150%) sepia(80%) hue-rotate(180deg) brightness(1.5); transform: translate(-50%, -50%) scale(1.1); }
+
+        /* BOTELLA 3D */
+        .scene {
+            width: 100%; height: 260px; perspective: 1200px; display: flex; justify-content: center; align-items: center; margin-bottom: 3rem; position: relative;
+        }
+        .bottle-3d { width: 120px; height: 140px; position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 5; }
+        .card:hover .bottle-3d { transform: rotateY(-25deg) rotateX(10deg) translateY(-5px); }
+
+        .cap { position: absolute; width: 48px; height: 55px; top: -59px; left: 36px; transform-style: preserve-3d; }
+        .cap .face { position: absolute; background: #050505; border: 1px solid #222; outline: 1px solid transparent; }
+        .cap .front, .cap .back { width: 48px; height: 55px; }
+        .cap .left, .cap .right { width: 48px; height: 55px; left: 0; }
+        .cap .top, .cap .bottom { width: 48px; height: 48px; top: 3.5px; }
+        .cap .front  { transform: translateZ(24px); }
+        .cap .back   { transform: rotateY(180deg) translateZ(24px); }
+        .cap .left   { transform: rotateY(-90deg) translateZ(24px); background: #000; }
+        .cap .right  { transform: rotateY(90deg) translateZ(24px); background: #1a1a1a; }
+        .cap .top    { transform: rotateX(90deg) translateZ(27.5px); }
+
+        .liquid { position: absolute; bottom: 5px; left: 5px; width: 110px; height: 75px; transform-style: preserve-3d; z-index: 2; transform-origin: bottom center; transition: all 0.8s ease; }
+        .card:hover .liquid { animation: slosh 2.5s ease-in-out infinite alternate; filter: brightness(1.5) drop-shadow(0 0 10px rgba(124,168,212,0.8)); }
+
+        @keyframes slosh { 0% { transform: rotateX(2deg) rotateY(2deg) rotateZ(2deg); } 50% { transform: rotateX(-1deg) rotateY(-1deg) rotateZ(-2deg); } 100% { transform: rotateX(1deg) rotateY(2deg) rotateZ(1deg); } }
+
+        .liquid .face { position: absolute; background: rgba(28, 69, 107, 0.6); outline: 1px solid transparent; transition: background 0.4s ease; }
+        .card:hover .liquid .face { background: rgba(124, 168, 212, 0.7); }
+        .liquid .front, .liquid .back { width: 110px; height: 75px; }
+        .liquid .left, .liquid .right { width: 44px; height: 75px; left: 33px; }
+        .liquid .top, .liquid .bottom { width: 110px; height: 44px; top: 15.5px; }
+        .liquid .front  { transform: translateZ(22px); }
+        .liquid .back   { transform: rotateY(180deg) translateZ(22px); }
+        .liquid .left   { transform: rotateY(-90deg) translateZ(55px); }
+        .liquid .right  { transform: rotateY(90deg) translateZ(55px); }
+        .liquid .top    { transform: rotateX(90deg) translateZ(37.5px); background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); }
+
+        .tube { position: absolute; width: 4px; height: 135px; background: rgba(255, 255, 255, 0.2); top: 0; left: 58px; transform: translateZ(0px); z-index: 3; }
+
+        .glass { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; z-index: 4; }
+        .glass .face { position: absolute; background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(255, 255, 255, 0.4); outline: 1px solid transparent; box-shadow: inset 0 0 20px rgba(255,255,255,0.1); }
+        .glass .front, .glass .back { width: 120px; height: 140px; }
+        .glass .left, .glass .right { width: 50px; height: 140px; left: 35px; }
+        .glass .top, .glass .bottom { width: 120px; height: 50px; top: 45px; }
+        .glass .front  { transform: translateZ(25px); }
+        .glass .back   { transform: rotateY(180deg) translateZ(25px); }
+        .glass .left   { transform: rotateY(-90deg) translateZ(60px); background: rgba(255,255,255,0.03); }
+        .glass .right  { transform: rotateY(90deg) translateZ(60px); background: rgba(255,255,255,0.08); }
+        .glass .top    { transform: rotateX(90deg) translateZ(70px); border-bottom: none; }
+        .glass .bottom { transform: rotateX(-90deg) translateZ(70px); background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.4); box-shadow: 0 25px 50px rgba(0,0,0,0.8); }
+
+        .bottle-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%) translateZ(26px); width: 60px; height: 60px; background: #000000; border: 1px solid var(--blue-light); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 5; box-shadow: 0 4px 15px rgba(0,0,0,0.8); transition: all 0.3s ease; }
+        .card:hover .bottle-label { box-shadow: 0 0 20px var(--blue-light); }
+        .bottle-label .logo-r-star-label { width: 35px; height: 35px; border: 1px solid var(--text-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: white; position: relative; }
+        .bottle-label .logo-r-star-label span { position: relative; top: 1px; }
+        .bottle-label .logo-r-star-label sup { font-size: 0.6rem; position: absolute; top: 3px; right: 3px; }
+
+        /* =========================================
+           METADATOS DEL CATÁLOGO
+           ========================================= */
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; width: 100%; border-bottom: 1px dashed var(--tech-line); padding-bottom: 0.5rem;}
+        .card h2 { font-size: 1rem; letter-spacing: 0.05em; display: flex; align-items: center; justify-content: space-between; width: 100%;}
+        
+        .ml-badge-title { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--blue-light); letter-spacing: 0.1em; font-weight: 700; margin-left: 10px; flex-shrink: 0;}
+        .inspiration { font-size: 0.55rem; font-family: 'Space Mono', monospace; letter-spacing: 0.1em; color: var(--blue-light); margin-bottom: 1.5rem; text-transform: uppercase;}
+
+        .notes { font-size: 0.5rem; font-family: 'Space Mono', monospace; letter-spacing: 0.05em; color: rgba(255,255,255,0.6); flex-grow: 1; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; font-weight: 400; }
+        .notes span { color: var(--text-main); font-weight: 700; display: block; margin-bottom: 0.2rem; }
+
+        .price-container { display: flex; align-items: center; font-family: 'Space Mono', monospace; gap: 8px; }
+        .price { font-size: 0.9rem; font-weight: 700; color: var(--blue-light); }
+        .price::before { content: "$ "; color: var(--text-main); }
+
+        .minimal-btn { background: transparent; border: 1px solid var(--tech-line); color: var(--text-main); padding: 0.6rem 1rem; text-decoration: none; font-size: 0.55rem; letter-spacing: 0.2em; font-family: 'Space Mono', monospace; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; cursor: pointer; text-transform: uppercase; }
+        .card:hover .minimal-btn { background: rgba(124, 168, 212, 0.2); border-color: var(--blue-light); }
+
+        .no-results { grid-column: 1 / -1; text-align: center; padding: 3rem; color: rgba(255,255,255,0.4); font-size: 0.8rem; font-family: 'Space Mono', monospace; letter-spacing: 0.2em; }
+        
+        /* =========================================
+           RESPONSIVE MOBILE / TABLET 
+           ========================================= */
+        @media (max-width: 1000px) {
+            .content-layer { flex-direction: column; }
+            .left-pane { width: 100%; position: relative; height: auto; min-height: auto; padding: 6rem 2rem 3rem 2rem; pointer-events: auto; }
+            .right-pane { width: 100%; margin-left: 0; padding: 3rem 2rem; border-left: none; border-top: 1px solid var(--tech-line); }
+            
+            .logo-r-star { top: 1.5rem; }
+            .giant-text { font-size: 12vw; margin-top: 2vh; }
+            .tech-paragraph { max-width: 100%; }
+            .hud-layer { display: none; }
+            
+            .floating-wa { position: relative; bottom: auto; left: auto; display: flex; justify-content: center; margin-top: 2rem; width: 100%; }
+            
+            /* Ajuste espacial para que el planeta cubra bien en móviles */
+            .giant-planet { width: 150vw; height: 150vw; bottom: -50vw; left: -25vw; }
+            .planet-corona { width: 160vw; height: 160vw; bottom: -55vw; left: -30vw; }
+        }
+
+        @media (max-width: 600px) {
+            .left-pane { padding: 5rem 1.5rem 2rem 1.5rem; }
+            .right-pane { padding: 2rem 1.5rem; }
+            .grid { grid-template-columns: 1fr; gap: 2rem; }
+            .search-section-title { font-size: 0.75rem; text-align: center; justify-content: center; }
+            .card { padding: 2rem 1.5rem; }
+            
+            .giant-text { font-size: 14vw; text-align: center; }
+            .giant-text span:nth-child(2) { padding-left: 0; }
+            
+            .top-nav { flex-direction: column; gap: 15px; text-align: center; }
+            .top-nav div { text-align: center !important; }
+            
+            .tech-subtitle { justify-content: center; text-align: center; }
+            .tech-paragraph { text-align: center; border-left: none; border-top: 2px solid var(--blue-light); padding-left: 0; padding-top: 1rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- LUZ INTERACTIVA DEL CURSOR -->
+    <div class="cursor-light" id="cursorLight"></div>
+
+    <!-- FONDO ESPACIAL PARALLAX (ECLIPSE) -->
+    <div class="scifi-background">
+        <div class="bg-layer" data-speed="0.1">
+            <div class="starfield"></div>
+        </div>
+        <div class="bg-layer" data-speed="0.3">
+            <div class="planet-corona"></div>
+        </div>
+        <div class="bg-layer" data-speed="0.5">
+            <div class="giant-planet">
+                <div class="planet-texture"></div>
+            </div>
+        </div>
+        <div class="bg-layer" data-speed="0.8">
+            <div class="asteroid ast-1"></div>
+            <div class="asteroid ast-2"></div>
+            <div class="asteroid ast-3"></div>
+        </div>
+    </div>
+
+    <!-- HUD OVERLAYS SCI-FI -->
+    <div class="hud-layer">
+        <div class="radar-grid"></div>
+        
+        <div class="hud-line-v"></div>
+        <div class="hud-line-h"></div>
+        <div class="crosshair ch-1">+</div>
+        <div class="crosshair ch-2">+</div>
+        <div class="crosshair ch-3">+</div>
+
+        <div class="screen-corner sc-tl"></div>
+        <div class="screen-corner sc-tr"></div>
+        <div class="screen-corner sc-bl"></div>
+        <div class="screen-corner sc-br"></div>
+
+        <div class="sf-data sf-1">SYS.ON // ORUM.CORE.v1.0</div>
+        <div class="sf-data sf-2">FRAGRANCE_DB: CONNECTED</div>
+        <div class="sf-data sf-3">LAT. 06.25 / LON. -75.56</div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="content-layer">
+        
+        <!-- PANEL IZQUIERDO -->
+        <div class="left-pane">
+            <div class="top-nav tech-font">
+                <div>PRESENCIA QUE SE SIENTE<br>PERFUMES DE INSPIRACIÓN</div>
+                <div style="text-align: right;">SS26<br>COLECCIÓN</div>
+            </div>
+
+            <div>
+                <h1 class="giant-text title-font">
+                    <span>ORUM</span>
+                    <span>PERFUMERÍA</span>
+                </h1>
+                
+                <div class="tech-subtitle">BASE DE DATOS INICIADA [ READY ]</div>
+                
+                <p class="tech-paragraph">
+                    FÓRMULAS QUE ALTERAN TODO. DISEÑADO EN COLOMBIA. CREADO SOLO PARA LOS AUDACES.
+                </p>
+            </div>
+
+            <a href="https://wa.me/573042885479" target="_blank" class="floating-wa">
+                CONTACTO / +57 304 2885479
+            </a>
+        </div>
+
+        <!-- PANEL DERECHO: CATÁLOGO -->
+        <div class="right-pane">
+            
+            <h3 class="search-section-title">
+                <svg style="width:18px;height:18px;margin-right:10px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                BUSCAR EN LA BASE DE DATOS
+            </h3>
+
+            <div class="search-container">
+                <div class="input-wrapper">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="BUSCAR POR REFERENCIA O CASA...">
+                </div>
+                
+                <div class="select-wrapper">
+                    <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                    <select id="casaSelect" class="casa-select">
+                        <option value="">CASAS DISPONIBLES (TODAS)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid" id="catalog-grid"></div>
+        </div>
+
+    </div>
+
+    <!-- LOGO CENTRAL SUPERIOR -->
+    <div class="logo-r-star title-font">
+        <span>R</span><sup>*</sup>
+    </div>
+
+    <script>
+        // EFECTOS INTERACTIVOS PARALLAX
+        const cursorLight = document.getElementById('cursorLight');
+        const bgLayers = document.querySelectorAll('.bg-layer');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursorLight.style.left = e.clientX + 'px';
+            cursorLight.style.top = e.clientY + 'px';
+
+            const x = (e.clientX / window.innerWidth) - 0.5;
+            const y = (e.clientY / window.innerHeight) - 0.5;
+            
+            bgLayers.forEach(layer => {
+                const speed = parseFloat(layer.getAttribute('data-speed'));
+                layer.style.transform = `translate(${x * 60 * speed}px, ${y * 60 * speed}px)`;
+            });
+        });
+
+        // BASE DE DATOS DE PERFUMES
+        const sampleImg = "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=200&auto=format&fit=crop";
+
+        const perfumes = [
+            { name: "ONDA*", insp: "Acqua di Giò", casa: "Giorgio Armani", salida: "lima, limon, bergamota, jazmin, naranja, mandarina y neroli", corazon: "notas marinas, jazmin, calone, romero, durazno, fresia, jacinto, ciclamen, violeta, cilantro rosa, nuez moscada y reseda", fondo: "almizcle blanco, cedro, musgo de roble, pachull y ámbar", imgOriginal: sampleImg },
+            { name: "ABYS*", insp: "Acqua di Giò Profondo", casa: "Giorgio Armani", salida: "notas marinas, Aquozone, bergamota y mandarina verde", corazon: "romero, lavanda, ciprés y resina almáciga del lentisco", fondo: "Notas minerales, almizcle, pachuli y ámbar", imgOriginal: sampleImg },
+            { name: "BOND*", insp: "Stronger With You", casa: "Giorgio Armani", salida: "castaña y azúcar", corazon: "salvia y lavanda", fondo: "vainilla y Humo", imgOriginal: sampleImg },
+            { name: "CROWN*", insp: "Aventus", casa: "Creed", salida: "bergamota, grosellas negras, manzana, limón y pimienta rosa", corazon: "piña, pachuli y jazmin de Marruecos", fondo: "abedul, almizcle, musgo de roble, cedro y ambroxan", imgOriginal: sampleImg },
+            { name: "FROST*", insp: "Silver Mountain Water", casa: "Creed", salida: "bergamota y mandarina", corazon: "té verde y grosellas negras", fondo: "almizcle, sándalo, petit grain y galbano", imgOriginal: sampleImg },
+            { name: "ROYAL*", insp: "Millesime Imperial", casa: "Creed", salida: "sal de mar y notas afrutadas", corazon: "limón siciliano, bergamota, iris y mandarina", fondo: "notas marinas, almizcle y notas amaderadas", imgOriginal: sampleImg },
+            { name: "INTEN*", insp: "Club the nuit intense man", casa: "Armaf", salida: "limón, piña, bergamota, grosellas negras y manzana", corazon: "abedul, jazmin y rosa", fondo: "almizcle, ámbar gris, pachuli y vainilla", imgOriginal: sampleImg },
+            { name: "WILD*", insp: "Sauvage", casa: "Dior", salida: "bergamota de Calabria y pimienta", corazon: "pimienta de Sichuan, lavanda, pimienta rosa, vetiver, pachuli, geranio y elemi", fondo: "ambroxan, cedro y ládano", imgOriginal: sampleImg },
+            { name: "FLAME*", insp: "Fahrenheit", casa: "Dior", salida: "flor del moscadero, lavanda, cedro, mandarina, manzanilla, bergamota, flor del espino y limón", corazon: "hojas de violeta, nuez moscada, cedro, sandalo, clavel, madreselva, jazmin y lirio de los valles", fondo: "cuero, vetiver, almizcle, ámbar, pachuli y haba tonka", imgOriginal: sampleImg },
+            { name: "AZURE*", insp: "Light Blue", casa: "Dolce & Gabbana", salida: "toronja, bergamota, mandarina siciliana y enebro", corazon: "pimienta, romero y palo de rosa de Brasil", fondo: "almizcle, incienso y musgo de roble", imgOriginal: sampleImg },
+            { name: "UNO*", insp: "The One", casa: "Dolce & Gabbana", salida: "toronja, cilantro y albahaca", corazon: "cardamomo, jengibre y flor de azahar del naranjo", fondo: "ambar, tabaco y cedro", imgOriginal: sampleImg },
+            { name: "REING*", insp: "K", casa: "Dolce & Gabbana", salida: "bayas de enebro, cítricos, naranja sanguina y limón siciliano", corazon: "pimienta de Jamaica, lavanda, esclarea y geranio", fondo: "vetiver, cedro y pachuli", imgOriginal: sampleImg },
+            { name: "SAIL*", insp: "Le Male", casa: "Jean Paul Gaultier", salida: "lavanda, menta, cardamomo, bergamota y abrótano", corazon: "canela, flor de azahar del naranjo y alcaravea", fondo: "vainilla, haba tonka, ámbar, sándalo y cedro", imgOriginal: sampleImg },
+            { name: "PULSE*", insp: "Ultra Male", casa: "Jean Paul Gaultier", salida: "pera, lavanda, menta, bergamota y limón", corazon: "canela, esclarea y alcaravea", fondo: "vaina de vainilla negra, ámbar, pachuli y cedro", imgOriginal: sampleImg },
+            { name: "EDEN*", insp: "Le Beau Le Parfum", casa: "Jean Paul Gaultier", salida: "piña, iris, jengibre y ciprés", corazon: "coco y notas amaderadas", fondo: "haba tonka, sandalo, ámbar y ambar gris", imgOriginal: sampleImg },
+            { name: "AURA*", insp: "CH", casa: "Carolina Herrera", salida: "hierba, bergamota y toronja", corazon: "notas amaderadas, nuez moscada, violeta, azafrán y jazmín", fondo: "azúcar, cuero, vainilla, gamuza, ámbar, madera de cachemira, sandalo, musgo de roble y vetiver", imgOriginal: sampleImg },
+            { name: "NOIR*", insp: "CH Men Private", casa: "Carolina Herrera", salida: "whisky y toronja", corazon: "cardamomo, lavanda, salvia y tomillo rojo", fondo: "cuero, haba tonka, notas amaderadas y benjuí", imgOriginal: sampleImg },
+            { name: "REBEL*", insp: "Bad Boy", casa: "Carolina Herrera", salida: "pimienta blanca, bergamota y pimienta rosa", corazon: "cedro y esclarea", fondo: "haba tonka y cacao", imgOriginal: sampleImg },
+            { name: "METRO*", insp: "212 Men", casa: "Carolina Herrera", salida: "notas verdes, toronja, especias, bergamota, lavanda y petit grain", corazon: "jengibre, violeta, gardenia y salvia", fondo: "almizcle, sándalo, incienso, vetiver, madera de gaiac y ládano", imgOriginal: sampleImg },
+            { name: "ELITE*", insp: "212 Vip", casa: "Carolina Herrera", salida: "maracuyá, lima, pimienta y jengibre", corazon: "vodka, ginebra, menta y especias", fondo: "ámbar, cuero y notas amaderadas", imgOriginal: sampleImg },
+            { name: "NIGHT*", insp: "212 Vip Black", casa: "Carolina Herrera", salida: "absenta, anis y hinojo", corazon: "lavanda", fondo: "vaina de vainilla negra y almizcle", imgOriginal: sampleImg },
+            { name: "DARK*", insp: "Black XS", casa: "Paco Rabanne", salida: "citricos, limón, salvia y cempasúchil", corazon: "praliné, canela, bálsamo de Tolú y cardamomo negro", fondo: "pachuli, ambar negro, árbol de ébano y palisandro", imgOriginal: sampleImg },
+            { name: "FURY*", insp: "Black XS L'Excès", casa: "Paco Rabanne", salida: "limon de Amalfi y lavanda", corazon: "cipriol y notas marinas", fondo: "ámbar y pachuli", imgOriginal: sampleImg },
+            { name: "GHOST*", insp: "Phantom", casa: "Paco Rabanne", salida: "lavanda, ralladura de limón y limón de Amalfi", corazon: "lavanda, notas terrosas, manzana, Humo y pachuli", fondo: "vainilla, lavanda y vetiver", imgOriginal: sampleImg },
+            { name: "GOLD*", insp: "One Million", casa: "Paco Rabanne", salida: "mandarina roja, toronja y menta", corazon: "canela, notas especiadas y rosa", fondo: "ámbar, cuero, notas amaderadas y pachuli hindu", imgOriginal: sampleImg },
+            { name: "LUCK*", insp: "One Million Lucky", casa: "Paco Rabanne", salida: "ciruela, notas ozónicas, toronja y bergamota", corazon: "avellana, miel, cedro, madera de cachemira, flor de azahar del naranjo y jazmin", fondo: "Amberwood, pachuli, vetiver y musgo de roble", imgOriginal: sampleImg },
+            { name: "VICTOR*", insp: "Invictus", casa: "Paco Rabanne", salida: "notas marinas, toronja y mandarina", corazon: "hoja de laurel y jazmin", fondo: "ámbar gris, madera de gaiac, musgo de roble y pachuli", imgOriginal: sampleImg },
+            { name: "VIVO*", insp: "Uomo", casa: "Valentino", salida: "bergamota y mirto", corazon: "avellana, chocolate y granos de café tostado", fondo: "cuero y cedro", imgOriginal: sampleImg },
+            { name: "ROMA*", insp: "Born In Roma", casa: "Valentino", salida: "vainilla", corazon: "lavanda", fondo: "vetiver", imgOriginal: sampleImg },
+            { name: "CLASS*", insp: "Pour Homme", casa: "Versace", salida: "limón, bergamota, neroli y rosa de Mai", corazon: "jacinto, cedro, esclarea y geranio", fondo: "almizcle, haba tonka y ámbar", imgOriginal: sampleImg },
+            { name: "FRESH*", insp: "Eau Fraîche", casa: "Versace", salida: "limón, bergamota, carambola, cardamomo y palo de rosa de Brasil", corazon: "cedro, estragón, salvia y pimienta", fondo: "almizcle, notas amaderadas, azafrán, ámbar y madera de sicómoro", imgOriginal: sampleImg },
+            { name: "INDIG*", insp: "Dylan Blue", casa: "Versace", salida: "bergamota de Calabria, notas acuáticas, toronja y hojas de higuera", corazon: "ambroxan, pimienta negra, pachuli, hojas de violeta y papiro de Egipto", fondo: "incienso, almizcle, haba tonka y azafrán", imgOriginal: sampleImg },
+            { name: "DESIRE*", insp: "Eros", casa: "Versace", salida: "menta, manzana verde y limón", corazon: "haba tonka, ambroxan y geranio", fondo: "vainilla de Madagascar, cedro de Virginia, cedro del Atlas, vetiver y musgo de roble", imgOriginal: sampleImg },
+            { name: "INFER*", insp: "Eros Flame", casa: "Versace", salida: "mandarina, pimienta de Madagascar, limón, Chinotto y romero", corazon: "rosa, geranio y Pepperwood", fondo: "vainilla, haba tonka, sandalo, cedro de Texas, pachulí y musgo de roble", imgOriginal: sampleImg },
+            { name: "LAGOON*", insp: "Blue", casa: "Lacoste", salida: "toronja y menta", corazon: "salvia y flor del naranjo africano", fondo: "helecho, pachuli y cedro de Virginia", imgOriginal: sampleImg },
+            { name: "ROUGE*", insp: "Red", casa: "Lacoste", salida: "jengibre, cardamomo y pimienta negra", corazon: "té rooibos y mango", fondo: "benjuí y Acácia", imgOriginal: sampleImg },
+            { name: "LEAF*", insp: "Vert", casa: "Lacoste", salida: "jengibre, cardamomo y pimienta negra", corazon: "té rooibos y mango", fondo: "benjuí y Acácia", imgOriginal: sampleImg },
+            { name: "ONYX*", insp: "Noir", casa: "Lacoste", salida: "sandia", corazon: "albahaca, lavanda y cedrón", fondo: "chocolate oscuro, cachemira, pachull y cumarina", imgOriginal: sampleImg },
+            { name: "PURE*", insp: "Blanc", casa: "Lacoste", salida: "toronja, romero, agujas de cedro y cardamomo", corazon: "ylang-ylang y nardos", fondo: "cedro de Virginia, vetiver, cuero y gamuza", imgOriginal: sampleImg },
+            { name: "MARK*", insp: "Emblem", casa: "Montblanc", salida: "esclarea, toronja y cardamomo", corazon: "hojas de violeta y canela", fondo: "haba tonka y notas amaderadas", imgOriginal: sampleImg },
+            { name: "MYTH*", insp: "Legend", casa: "Montblanc", salida: "lavanda, piña, bergamota y cedrón", corazon: "manzana roja, frutas secas, musgo de roble, geranio, cumarina y rosa", fondo: "haba tonka y sándalo", imgOriginal: sampleImg },
+            { name: "NOVA*", insp: "Starwalker", casa: "Montblanc", salida: "bambu, bergamota y mandarina", corazon: "almizcle blanco, sándalo y cedro", fondo: "jengibre, resina de abeto, nuez moscada y ámbar", imgOriginal: sampleImg },
+            { name: "QUEST*", insp: "Explorer", casa: "Montblanc", salida: "bergamota, pimienta rosa y esclarea", corazon: "vetiver de Haiti y cuero", fondo: "ambroxan, Akigalawood, hojas de pachuli de Indonesia y vaina de cacao", imgOriginal: sampleImg },
+            { name: "PLAY*", insp: "Toy boy", casa: "Moschino", salida: "pimienta rosa, pera, nuez moscada de Indonesia, elemí y bergamota", corazon: "rosa, clavo de olor, magnolia y lino", fondo: "vetiver de Haiti, cachemira, sándalo, Sylkolide y ámbar", imgOriginal: sampleImg },
+            { name: "AXIS*", insp: "XY", casa: "Hugo Boss", salida: "cedro, hojas del peral y bergamota", corazon: "menta y albahaca", fondo: "cedro, almizcle y pachuli", imgOriginal: sampleImg },
+            { name: "CRIM*", insp: "Red", casa: "Hugo Boss", salida: "notas metálicas, toronja, pimienta rosa y gálbano", corazon: "ruibarbo, notas metálicas, piña y cedro", fondo: "ámbar y haba tonka", imgOriginal: sampleImg },
+            { name: "PRIME*", insp: "Bottled", casa: "Hugo Boss", salida: "manzana, ciruela, bergamota, limón, musgo de roble y geranio", corazon: "canela, caoba y clavel", fondo: "vainilla, sándalo, cedro, vetiver y olivo", imgOriginal: sampleImg },
+            { name: "RAW*", insp: "Bad", casa: "Diesel", salida: "lavanda, bergamota, cardamomo y hojas de violeta", corazon: "caviar, raíz de lirio y salvia", fondo: "notas amaderadas, tabaco, ambroxan, haba tonka y pachull", imgOriginal: sampleImg },
+            { name: "BRAVE*", insp: "Only the brave", casa: "Diesel", salida: "limón de Amalfi y mandarina", corazon: "violeta, cedro de Virginia y cilantro", fondo: "ambar, cuero, benjul, ládano francés y styrax", imgOriginal: sampleImg },
+            { name: "ZERO*", insp: "Zero Plus", casa: "Diesel", salida: "nuez moscada, cardamomo, anis, naranja y bergamota", corazon: "canela, rosa, violeta, jazmín y lirio de los valles", fondo: "vainilla, almizcle, ámbar, heliotropo y pachuli", imgOriginal: sampleImg },
+            { name: "PLUS*", insp: "Plus Plus Masculine", casa: "Diesel", salida: "naranja, bergamota, hojas de palmera y heliotropo", corazon: "jazmin, cilantro, abedul, violeta, salvia, cardamomo, notas verdes y lirio de los valles", fondo: "canela, haba tonka, nuez moscada, sándalo, almizcle, pachuli, anis, clavo de olor, vetiver y musgo de roble", imgOriginal: sampleImg },
+            { name: "ETER*", insp: "Eternity", casa: "Calvin Klein", salida: "lavanda, limón, bergamota y mandarina", corazon: "salvia, bayas de enebro, albahaca, geranio, jazmin, cilantro, flor de azahar del naranjo, lirio de los valles y azucena", fondo: "sándalo, almizcle, vetiver, palo de rosa de Brasil y ambar", imgOriginal: sampleImg },
+            { name: "ASH*", insp: "Carbón", casa: "Prada", salida: "bergamota y pimienta", corazon: "lavanda, notas metálicas, notas acuosas, carbón y tintura de tierra", fondo: "ambroxan y pachuli", imgOriginal: sampleImg },
+            { name: "RIDER*", insp: "Polo Red", casa: "Ralph Lauren", salida: "arándano, toronja y limón italiano", corazon: "azafrán y salvia", fondo: "ámbar, café y notas amaderadas", imgOriginal: sampleImg },
+            { name: "MARINE*", insp: "Polo Blue", casa: "Ralph Lauren", salida: "pepino, melón y mandarina", corazon: "albahaca, salvia y geranio", fondo: "gamuza, notas amaderadas y almizcle", imgOriginal: sampleImg }
+        ];
+
+        const grid = document.getElementById('catalog-grid');
+        const searchInput = document.getElementById('searchInput');
+        const casaSelect = document.getElementById('casaSelect');
+        const phoneNumber = "573042885479"; 
+
+        const casasUnicas = [...new Set(perfumes.map(p => p.casa))].sort();
+        casasUnicas.forEach(casa => {
+            const option = document.createElement('option');
+            option.value = casa.toLowerCase();
+            option.textContent = casa;
+            casaSelect.appendChild(option);
+        });
+
+        function renderGrid(data) {
+            grid.innerHTML = '';
+            
+            if(data.length === 0) {
+                grid.innerHTML = '<div class="no-results">[ NO SE ENCONTRARON COINCIDENCIAS ]</div>';
+                return;
+            }
+
+            data.forEach(p => {
+                const waLink = `https://wa.me/${phoneNumber}?text=Hola,%20estoy%20interesado%20en%20el%20perfume%20${encodeURIComponent(p.name)}%20inspirado%20en%20${encodeURIComponent(p.insp)}`;
+                
+                const cardHTML = `
+                    <div class="card">
+                        
+                        <div class="scene">
+                            <img src="${p.imgOriginal}" alt="${p.insp}" class="original-bottle-bg">
+
+                            <div class="bottle-3d">
+                                <div class="cap">
+                                    <div class="face front"></div><div class="face back"></div>
+                                    <div class="face left"></div><div class="face right"></div>
+                                    <div class="face top"></div><div class="face bottom"></div>
+                                </div>
+                                <div class="tube"></div>
+                                
+                                <div class="liquid">
+                                    <div class="face front"></div><div class="face back"></div>
+                                    <div class="face left"></div><div class="face right"></div>
+                                    <div class="face top"></div>
+                                </div>
+                                
+                                <div class="glass">
+                                    <div class="face front"></div><div class="face back"></div>
+                                    <div class="face left"></div><div class="face right"></div>
+                                    <div class="face top"></div><div class="face bottom"></div>
+                                </div>
+
+                                <div class="bottle-label">
+                                    <div class="logo-r-star-label title-font">
+                                        <span>R</span><sup>*</sup>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-header">
+                            <h2 class="title-font">
+                                ${p.name}
+                                <span class="ml-badge-title">[ 50ML ]</span>
+                            </h2>
+                        </div>
+                        
+                        <div class="inspiration tech-font">REF / ${p.insp} — ${p.casa}</div>
+                        
+                        <div class="notes">
+                            <div><span>[ SALIDA ]</span> ${p.salida}</div>
+                            <div><span>[ CORAZÓN ]</span> ${p.corazon}</div>
+                            <div><span>[ FONDO ]</span> ${p.fondo}</div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--tech-line); padding-top: 1.5rem; margin-top: auto;">
+                            <a href="${waLink}" target="_blank" class="minimal-btn">
+                                <svg style="width:14px;height:14px;margin-right:6px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                ORDENAR AHORA
+                            </a>
+                            <div class="price-container">
+                                <div class="price">32.000</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
+
+        function filterPerfumes() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedCasa = casaSelect.value;
+
+            const filteredPerfumes = perfumes.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm) || 
+                                      p.insp.toLowerCase().includes(searchTerm) || 
+                                      p.casa.toLowerCase().includes(searchTerm);
+                const matchesCasa = selectedCasa === "" || p.casa.toLowerCase() === selectedCasa;
+                
+                return matchesSearch && matchesCasa;
+            });
+            renderGrid(filteredPerfumes);
+        }
+
+        searchInput.addEventListener('input', filterPerfumes);
+        casaSelect.addEventListener('change', filterPerfumes);
+
+        renderGrid(perfumes);
+    </script>
+</body>
+</html>
