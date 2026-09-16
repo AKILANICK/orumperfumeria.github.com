@@ -67,32 +67,36 @@
             50%, 80% { opacity: 0.95; }
         }
 
-        /* PARTÍCULAS DE LUZ (POLVO FLOTANTE) */
+        /* PARTÍCULAS DE LUZ (MÁS GRANDES Y BRILLANTES) */
         .particles-layer-1, .particles-layer-2 {
             position: absolute; top: 0; left: 0; width: 100vw; height: 200vh;
-            pointer-events: none; mix-blend-mode: screen; opacity: 0.4;
+            pointer-events: none; mix-blend-mode: screen; 
         }
         
         .particles-layer-1 {
             background-image: 
-                radial-gradient(1px 1px at 20vw 10vh, #fff, transparent),
-                radial-gradient(1.5px 1.5px at 60vw 30vh, var(--blue-steel), transparent),
-                radial-gradient(2px 2px at 30vw 50vh, #fff, transparent),
-                radial-gradient(1px 1px at 80vw 70vh, var(--blue-steel), transparent),
-                radial-gradient(1.5px 1.5px at 50vw 90vh, #fff, transparent);
+                radial-gradient(4px 4px at 20vw 10vh, rgba(255,255,255,1) 10%, rgba(184,222,255,0.8) 40%, transparent 80%),
+                radial-gradient(6px 6px at 60vw 30vh, rgba(184,222,255,1) 10%, rgba(74,124,255,0.8) 40%, transparent 80%),
+                radial-gradient(3px 3px at 30vw 50vh, rgba(255,255,255,1) 10%, rgba(184,222,255,0.6) 40%, transparent 80%),
+                radial-gradient(5px 5px at 80vw 70vh, rgba(184,222,255,1) 10%, rgba(74,124,255,0.8) 40%, transparent 80%),
+                radial-gradient(4px 4px at 50vw 90vh, rgba(255,255,255,1) 10%, rgba(184,222,255,0.8) 40%, transparent 80%),
+                radial-gradient(6px 6px at 15vw 85vh, rgba(184,222,255,1) 10%, rgba(74,124,255,0.8) 40%, transparent 80%),
+                radial-gradient(3px 3px at 85vw 15vh, rgba(255,255,255,1) 10%, rgba(184,222,255,0.6) 40%, transparent 80%);
             background-size: 100vw 100vh;
-            animation: floatParticles 40s linear infinite;
+            animation: floatParticles 30s linear infinite;
+            opacity: 0.8;
         }
 
         .particles-layer-2 {
             background-image: 
-                radial-gradient(2px 2px at 40vw 20vh, #fff, transparent),
-                radial-gradient(1px 1px at 80vw 40vh, var(--blue-steel), transparent),
-                radial-gradient(1.5px 1.5px at 10vw 60vh, #fff, transparent),
-                radial-gradient(2px 2px at 70vw 80vh, var(--blue-steel), transparent);
+                radial-gradient(5px 5px at 40vw 20vh, rgba(255,255,255,1) 10%, rgba(184,222,255,0.8) 40%, transparent 80%),
+                radial-gradient(3px 3px at 80vw 40vh, rgba(184,222,255,1) 10%, rgba(74,124,255,0.8) 40%, transparent 80%),
+                radial-gradient(6px 6px at 10vw 60vh, rgba(255,255,255,1) 10%, rgba(184,222,255,0.8) 40%, transparent 80%),
+                radial-gradient(4px 4px at 70vw 80vh, rgba(184,222,255,1) 10%, rgba(74,124,255,0.8) 40%, transparent 80%),
+                radial-gradient(5px 5px at 50vw 35vh, rgba(255,255,255,1) 10%, rgba(184,222,255,0.6) 40%, transparent 80%);
             background-size: 80vw 80vh;
-            animation: floatParticles 25s linear infinite reverse;
-            opacity: 0.2;
+            animation: floatParticles 20s linear infinite reverse;
+            opacity: 0.6;
         }
 
         @keyframes floatParticles {
@@ -147,7 +151,21 @@
 
         .tech-paragraph {
             font-size: 0.65rem; line-height: 1.8; letter-spacing: 0.05em; color: rgba(255,255,255,0.6);
-            max-width: 80%; border-left: 2px solid var(--blue-steel); padding-left: 1rem;
+            max-width: 80%; border-left: 2px solid var(--blue-steel); padding-left: 1rem; margin-bottom: 3rem;
+        }
+
+        /* BOTÓN FIJO DE CONTACTO (IZQUIERDA) */
+        .contact-btn {
+            background: rgba(74, 124, 255, 0.1); border: 1px solid var(--blue-steel);
+            color: var(--blue-steel); text-decoration: none; font-size: 0.75rem; 
+            font-family: 'Space Mono', monospace; letter-spacing: 0.1em; 
+            padding: 1rem 2rem; transition: all 0.3s ease; display: inline-flex; 
+            align-items: center; gap: 12px; width: max-content;
+            box-shadow: 0 0 15px rgba(74, 124, 255, 0.1);
+        }
+        .contact-btn:hover { 
+            background: var(--blue-steel); color: #000; font-weight: 700;
+            box-shadow: 0 0 25px rgba(74, 124, 255, 0.5); transform: translateY(-3px);
         }
 
         /* =========================================
@@ -157,15 +175,18 @@
 
         .search-container { width: 100%; margin-bottom: 5rem; position: relative; }
         
-        .input-wrapper { display: flex; align-items: center; border-bottom: 1px solid var(--tech-line); transition: all 0.3s ease; }
+        .input-wrapper { display: flex; align-items: center; border-bottom: 1px solid var(--tech-line); transition: all 0.3s ease; margin-bottom: 1.5rem; }
         .input-wrapper:focus-within { border-color: var(--blue-steel); box-shadow: 0 5px 15px rgba(74, 124, 255, 0.1); }
         .search-icon { width: 16px; height: 16px; color: var(--blue-steel); margin-right: 15px; }
         .search-input { width: 100%; padding: 1.2rem 0; background: transparent; border: none; color: var(--white-pure); outline: none; }
         .search-input::placeholder { color: rgba(255, 255, 255, 0.3); }
 
-        .select-wrapper { position: relative; width: 100%; margin-top: 1.5rem; display: flex; align-items: center; border-bottom: 1px solid var(--tech-line); transition: all 0.3s ease; }
+        /* Fila de filtros (Casa y Familia Olfativa) */
+        .filters-row { display: flex; gap: 1.5rem; width: 100%; }
+
+        .select-wrapper { position: relative; width: 100%; display: flex; align-items: center; border-bottom: 1px solid var(--tech-line); transition: all 0.3s ease; }
         .select-wrapper:focus-within { border-color: var(--blue-steel); }
-        .filter-icon { width: 16px; height: 16px; color: var(--blue-steel); margin-right: 15px; }
+        .filter-icon { width: 16px; height: 16px; color: var(--blue-steel); margin-right: 15px; flex-shrink: 0; }
         .casa-select { width: 100%; padding: 1.2rem 0; background: transparent; border: none; color: var(--white-pure); outline: none; cursor: pointer; appearance: none; }
         .casa-select option { background: var(--bg-black); color: var(--white-pure); }
         .select-wrapper::after { content: "▼"; position: absolute; right: 10px; font-size: 0.6rem; color: var(--blue-steel); pointer-events: none; }
@@ -194,7 +215,7 @@
         }
         .card:hover .original-bottle-bg { opacity: 0.3; filter: grayscale(50%) sepia(50%) hue-rotate(180deg); transform: translate(-50%, -50%) scale(1.05); }
 
-        /* BOTELLA 3D (Tonos fríos ajustados) */
+        /* BOTELLA 3D */
         .scene { width: 100%; height: 220px; perspective: 1200px; display: flex; justify-content: center; align-items: center; margin-bottom: 2rem; position: relative; }
         .bottle-3d { width: 100px; height: 120px; position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 5; }
         .card:hover .bottle-3d { transform: rotateY(-25deg) rotateX(10deg) translateY(-5px); }
@@ -240,7 +261,6 @@
         .glass .top    { transform: rotateX(90deg) translateZ(60px); border-bottom: none; }
         .glass .bottom { transform: rotateX(-90deg) translateZ(60px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.9); }
 
-        /* Etiqueta Negra R* */
         .bottle-label {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%) translateZ(21px);
             width: 50px; height: 50px; background: #000000; border: 1px solid var(--blue-steel);
@@ -329,7 +349,6 @@
         }
         .chat-option-btn:hover { background: var(--blue-steel); color: #000; border-color: var(--blue-steel); font-weight: 700; }
 
-        /* Tarjetas de recomendación en el chat */
         .chat-recommendation {
             display: flex; gap: 10px; background: rgba(255,255,255,0.02);
             border: 1px solid var(--tech-line); padding: 10px; margin-top: 5px; align-items: center;
@@ -352,16 +371,16 @@
             .tech-paragraph { max-width: 100%; }
             .chatbot-window { width: 90vw; right: 5vw; bottom: 90px; }
             .volumetric-spotlight { width: 100vw; }
+            .filters-row { flex-direction: column; gap: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- STAGE LIGHTING CON EFECTO ROTO Y PARTÍCULAS -->
+    <!-- STAGE LIGHTING CON EFECTO ROTO Y PARTÍCULAS MEJORADAS -->
     <div class="cinematic-stage">
         <div class="volumetric-spotlight"></div>
         <div class="hard-beam"></div>
-        <div class="haze"></div>
         <div class="particles-layer-1"></div>
         <div class="particles-layer-2"></div>
     </div>
@@ -397,23 +416,45 @@
                 <p class="tech-paragraph">
                     FÓRMULAS QUE ALTERAN TODO. DISEÑADO EN COLOMBIA. CREADO SOLO PARA LOS AUDACES.
                 </p>
+                
+                <!-- BOTÓN DE CONTACTO INTEGRADO -->
+                <a href="https://wa.me/573042885479" target="_blank" class="contact-btn">
+                    <svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    CONTACTO
+                </a>
             </div>
         </div>
 
         <!-- RIGHT PANE (CATALOG) -->
         <div class="right-pane">
             <div class="search-container tech-font">
+                
                 <div class="input-wrapper">
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     <input type="text" id="searchInput" class="search-input tech-font" placeholder="BUSCAR POR REFERENCIA O CASA...">
                 </div>
                 
-                <div class="select-wrapper">
-                    <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-                    <select id="casaSelect" class="casa-select tech-font">
-                        <option value="">CASAS DISPONIBLES (TODAS)</option>
-                    </select>
+                <!-- FILA DE FILTROS: CASA Y FAMILIA OLFATIVA -->
+                <div class="filters-row">
+                    <div class="select-wrapper">
+                        <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <select id="casaSelect" class="casa-select tech-font">
+                            <option value="">CASAS DISPONIBLES (TODAS)</option>
+                        </select>
+                    </div>
+
+                    <div class="select-wrapper">
+                        <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        <select id="notasSelect" class="casa-select tech-font">
+                            <option value="">FAMILIA OLFATIVA (TODAS)</option>
+                            <option value="dulce">DULCE / GOURMAND</option>
+                            <option value="amaderado">AMADERADO / CUERO</option>
+                            <option value="citrico">CÍTRICO / FRESCO</option>
+                            <option value="acuatico">ACUÁTICO / MARINO</option>
+                        </select>
+                    </div>
                 </div>
+
             </div>
 
             <div class="grid" id="catalog-grid"></div>
@@ -421,7 +462,7 @@
 
     </div>
 
-    <!-- LOGO -->
+    <!-- LOGO Y ELEMENTOS FIXADOS -->
     <div class="logo-r-star">
         <span>R</span><sup>*</sup>
     </div>
@@ -436,7 +477,6 @@
             <span class="title">ORUM AI // ASISTENTE</span>
             <button class="close-chat" id="closeChatBtn">✕</button>
         </div>
-        <!-- Contenedores limpios, sin comentarios para que el JS detecte que está vacío -->
         <div class="chat-body" id="chatBody"></div>
         <div class="chat-options" id="chatOptions"></div>
     </div>
@@ -507,11 +547,12 @@
         ];
 
         // ==========================================
-        // RENDER DEL CATÁLOGO
+        // RENDER DEL CATÁLOGO & FILTROS
         // ==========================================
         const grid = document.getElementById('catalog-grid');
         const searchInput = document.getElementById('searchInput');
         const casaSelect = document.getElementById('casaSelect');
+        const notasSelect = document.getElementById('notasSelect');
 
         const casasUnicas = [...new Set(perfumes.map(p => p.casa))].sort();
         casasUnicas.forEach(casa => {
@@ -584,16 +625,32 @@
         function filterPerfumes() {
             const searchTerm = searchInput.value.toLowerCase();
             const selectedCasa = casaSelect.value;
+            const selectedNota = notasSelect.value;
+
             const filteredPerfumes = perfumes.filter(p => {
                 const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.insp.toLowerCase().includes(searchTerm) || p.casa.toLowerCase().includes(searchTerm);
                 const matchesCasa = selectedCasa === "" || p.casa.toLowerCase() === selectedCasa;
-                return matchesSearch && matchesCasa;
+                
+                let matchesNota = true;
+                if (selectedNota !== "") {
+                    const allNotes = (p.salida + " " + p.corazon + " " + p.fondo).toLowerCase();
+                    let keywords = [];
+                    if (selectedNota === "dulce") keywords = ["vainilla", "haba tonka", "praliné", "azúcar", "caramelo", "cacao", "chocolate", "canela", "dulce"];
+                    if (selectedNota === "amaderado") keywords = ["cedro", "cuero", "sándalo", "vetiver", "musgo", "abedul", "madera", "incienso"];
+                    if (selectedNota === "citrico") keywords = ["limón", "bergamota", "toronja", "mandarina", "naranja", "lima", "cítricos", "citrico"];
+                    if (selectedNota === "acuatico") keywords = ["marinas", "calone", "aquozone", "agua", "sal", "acuáticas", "marino", "acuatico"];
+                    
+                    matchesNota = keywords.some(kw => allNotes.includes(kw));
+                }
+
+                return matchesSearch && matchesCasa && matchesNota;
             });
             renderGrid(filteredPerfumes);
         }
 
         searchInput.addEventListener('input', filterPerfumes);
         casaSelect.addEventListener('change', filterPerfumes);
+        notasSelect.addEventListener('change', filterPerfumes);
         renderGrid(perfumes);
 
         // ==========================================
@@ -607,7 +664,7 @@
 
         let currentQuestion = 0;
         let userAnswers = {};
-        let isChatInitialized = false; // Variable clave para evitar el error del cuadro gris/vacío
+        let isChatInitialized = false; 
 
         const chatQuestions = [
             { id: "notas", text: "SYS.ON // ORUM AI. Te guiaré hacia tu fragancia ideal. ¿Qué perfil aromático prefieres?", options: ["Dulce / Vainilla", "Amaderado / Cuero", "Cítrico / Fresco", "Acuático / Marino"] },
@@ -621,7 +678,7 @@
             msgDiv.classList.add('chat-msg', sender);
             msgDiv.textContent = text;
             chatBody.appendChild(msgDiv);
-            chatBody.scrollTop = chatBody.scrollHeight; // Hacer scroll hacia abajo al recibir un mensaje
+            chatBody.scrollTop = chatBody.scrollHeight; 
         }
 
         function showOptions(options) {
@@ -633,7 +690,7 @@
                 btn.onclick = () => handleOptionClick(opt);
                 chatOptions.appendChild(btn);
             });
-            chatBody.scrollTop = chatBody.scrollHeight; // Asegurar que opciones siempre se vean
+            chatBody.scrollTop = chatBody.scrollHeight; 
         }
 
         function handleOptionClick(optionText) {
@@ -652,7 +709,6 @@
             }, 500);
         }
 
-        // ALGORITMO DE RECOMENDACIÓN MEJORADO
         function recommendPerfumes() {
             addMessage("ESCANEANDO BASE DE DATOS...", 'bot');
             
@@ -662,7 +718,6 @@
                 let keywords = [];
                 const n = userAnswers.notas;
                 
-                // Mapeo detallado de notas para asegurar que encuentra perfumes en la DB
                 if (n.includes("Dulce")) {
                     keywords = ["vainilla", "haba tonka", "praliné", "azúcar", "caramelo", "cacao", "chocolate", "canela"];
                 } else if (n.includes("Amaderado")) {
@@ -673,19 +728,15 @@
                     keywords = ["marinas", "calone", "aquozone", "agua", "sal", "acuáticas", "marino"];
                 }
 
-                // Evaluar puntuación según los ingredientes en salida, corazon y fondo
                 perfumes.forEach(p => {
                     p.score = 0;
                     const allNotes = (p.salida + " " + p.corazon + " " + p.fondo).toLowerCase();
                     keywords.forEach(kw => {
                         if(allNotes.includes(kw)) p.score += 15;
                     });
-                    
-                    // Añadimos un peso aleatorio mínimo para desempatar aquellos con la misma puntuación
                     p.score += Math.random(); 
                 });
 
-                // Ordenar y extraer top 2
                 const sortedPerfumes = [...perfumes].sort((a, b) => b.score - a.score);
                 const reco1 = sortedPerfumes[0];
                 const reco2 = sortedPerfumes[1];
@@ -693,7 +744,6 @@
                 renderRecommendation(reco1);
                 renderRecommendation(reco2);
 
-                // Botones Finales
                 chatOptions.innerHTML = '';
                 const btnWa = document.createElement('button');
                 btnWa.classList.add('chat-option-btn');
@@ -732,7 +782,6 @@
             chatBody.scrollTop = chatBody.scrollHeight;
         }
 
-        // Iniciar flujo del chat desde cero
         function initChat() {
             currentQuestion = 0;
             userAnswers = {};
@@ -742,7 +791,6 @@
             showOptions(chatQuestions[0].options);
         }
 
-        // Botón abrir chat (Solo se inicializa 1 vez)
         chatbotBtn.addEventListener('click', () => {
             chatbotWindow.classList.add('active');
             if (!isChatInitialized) {
@@ -751,7 +799,6 @@
             }
         });
 
-        // Botón cerrar chat
         closeChatBtn.addEventListener('click', () => {
             chatbotWindow.classList.remove('active');
         });
