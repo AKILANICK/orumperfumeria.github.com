@@ -67,7 +67,7 @@
             50%, 80% { opacity: 0.95; }
         }
 
-        /* PARTÍCULAS DE LUZ */
+        /* PARTÍCULAS DE LUZ (MÁS GRANDES Y BRILLANTES) */
         .particles-layer-1, .particles-layer-2 {
             position: absolute; top: 0; left: 0; width: 100vw; height: 200vh;
             pointer-events: none; mix-blend-mode: screen; 
@@ -154,7 +154,7 @@
             max-width: 80%; border-left: 2px solid var(--blue-steel); padding-left: 1rem; margin-bottom: 3rem;
         }
 
-        /* BOTÓN DE CONTACTO */
+        /* BOTÓN FIJO DE CONTACTO (IZQUIERDA) */
         .contact-btn {
             background: rgba(74, 124, 255, 0.1); border: 1px solid var(--blue-steel);
             color: var(--blue-steel); text-decoration: none; font-size: 0.75rem; 
@@ -181,6 +181,7 @@
         .search-input { width: 100%; padding: 1.2rem 0; background: transparent; border: none; color: var(--white-pure); outline: none; }
         .search-input::placeholder { color: rgba(255, 255, 255, 0.3); }
 
+        /* Fila de filtros (Casa y Familia Olfativa) */
         .filters-row { display: flex; gap: 1.5rem; width: 100%; }
 
         .select-wrapper { position: relative; width: 100%; display: flex; align-items: center; border-bottom: 1px solid var(--tech-line); transition: all 0.3s ease; }
@@ -190,7 +191,7 @@
         .casa-select option { background: var(--bg-black); color: var(--white-pure); }
         .select-wrapper::after { content: "▼"; position: absolute; right: 10px; font-size: 0.6rem; color: var(--blue-steel); pointer-events: none; }
 
-        /* GRID DEL CATÁLOGO */
+        /* GRID DEL CATÁLOGO - TECHNO FUTURIST */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 4rem 2rem; }
 
         .card {
@@ -205,80 +206,72 @@
             transform: translateY(-5px);
         }
 
-        /* BOTELLA 3D CORREGIDA (MEDIDAS ORIGINALES: Cero glitches, Etiqueta al frente) */
-        .scene { width: 100%; height: 260px; perspective: 1200px; display: flex; justify-content: center; align-items: center; margin-bottom: 2rem; position: relative; }
-        .bottle-3d { width: 120px; height: 140px; position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 5; }
+        /* HOLOGRAMA SCI-FI DE FONDO */
+        .original-bottle-bg {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 60px; max-height: 100px; object-fit: contain;
+            opacity: 0.1; filter: grayscale(100%) contrast(120%);
+            z-index: 1; transition: all 0.4s ease; pointer-events: none;
+        }
+        .card:hover .original-bottle-bg { opacity: 0.3; filter: grayscale(50%) sepia(50%) hue-rotate(180deg); transform: translate(-50%, -50%) scale(1.05); }
+
+        /* BOTELLA 3D */
+        .scene { width: 100%; height: 220px; perspective: 1200px; display: flex; justify-content: center; align-items: center; margin-bottom: 2rem; position: relative; }
+        .bottle-3d { width: 100px; height: 120px; position: relative; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 5; }
         .card:hover .bottle-3d { transform: rotateY(-25deg) rotateX(10deg) translateY(-5px); }
 
-        .cap { position: absolute; width: 48px; height: 55px; top: -59px; left: 36px; transform-style: preserve-3d; }
-        .cap .face { position: absolute; background: #050505; border: 1px solid #222; outline: 1px solid transparent; }
-        .cap .front, .cap .back { width: 48px; height: 55px; }
-        .cap .left, .cap .right { width: 48px; height: 55px; left: 0; }
-        .cap .top, .cap .bottom { width: 48px; height: 48px; top: 3.5px; }
-        .cap .front  { transform: translateZ(24px); }
-        .cap .back   { transform: rotateY(180deg) translateZ(24px); }
-        .cap .left   { transform: rotateY(-90deg) translateZ(24px); background: #000; }
-        .cap .right  { transform: rotateY(90deg) translateZ(24px); background: #111; }
-        .cap .top    { transform: rotateX(90deg) translateZ(27.5px); }
+        .cap { position: absolute; width: 40px; height: 45px; top: -49px; left: 30px; transform-style: preserve-3d; }
+        .cap .face { position: absolute; background: #080808; border: 1px solid #222; outline: 1px solid transparent; }
+        .cap .front, .cap .back { width: 40px; height: 45px; }
+        .cap .left, .cap .right { width: 40px; height: 45px; left: 0; }
+        .cap .top, .cap .bottom { width: 40px; height: 40px; top: 2.5px; }
+        .cap .front  { transform: translateZ(20px); }
+        .cap .back   { transform: rotateY(180deg) translateZ(20px); }
+        .cap .left   { transform: rotateY(-90deg) translateZ(20px); background: #000; }
+        .cap .right  { transform: rotateY(90deg) translateZ(20px); background: #111; }
+        .cap .top    { transform: rotateX(90deg) translateZ(22.5px); }
 
-        .liquid { position: absolute; bottom: 5px; left: 5px; width: 110px; height: 75px; transform-style: preserve-3d; z-index: 2; transform-origin: bottom center; transition: all 0.8s ease; }
+        .liquid { position: absolute; bottom: 4px; left: 4px; width: 92px; height: 60px; transform-style: preserve-3d; z-index: 2; transform-origin: bottom center; transition: all 0.8s ease; }
         .card:hover .liquid { animation: slosh 2.5s ease-in-out infinite alternate; filter: drop-shadow(0 0 15px rgba(74,124,255,0.4)); }
 
         @keyframes slosh { 0% { transform: rotateX(2deg) rotateY(2deg) rotateZ(2deg); } 50% { transform: rotateX(-1deg) rotateY(-1deg) rotateZ(-2deg); } 100% { transform: rotateX(1deg) rotateY(2deg) rotateZ(1deg); } }
 
         .liquid .face { position: absolute; background: rgba(74, 124, 255, 0.2); outline: 1px solid transparent; transition: background 0.4s ease; }
         .card:hover .liquid .face { background: rgba(74, 124, 255, 0.4); }
-        .liquid .front, .liquid .back { width: 110px; height: 75px; }
-        .liquid .left, .liquid .right { width: 44px; height: 75px; left: 33px; }
-        .liquid .top, .liquid .bottom { width: 110px; height: 44px; top: 15.5px; }
-        .liquid .front  { transform: translateZ(22px); }
-        .liquid .back   { transform: rotateY(180deg) translateZ(22px); }
-        .liquid .left   { transform: rotateY(-90deg) translateZ(55px); }
-        .liquid .right  { transform: rotateY(90deg) translateZ(55px); }
-        .liquid .top    { transform: rotateX(90deg) translateZ(37.5px); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
+        .liquid .front, .liquid .back { width: 92px; height: 60px; }
+        .liquid .left, .liquid .right { width: 36px; height: 60px; left: 28px; }
+        .liquid .top, .liquid .bottom { width: 92px; height: 36px; top: 12px; }
+        .liquid .front  { transform: translateZ(18px); }
+        .liquid .back   { transform: rotateY(180deg) translateZ(18px); }
+        .liquid .left   { transform: rotateY(-90deg) translateZ(46px); }
+        .liquid .right  { transform: rotateY(90deg) translateZ(46px); }
+        .liquid .top    { transform: rotateX(90deg) translateZ(30px); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
 
-        .tube { position: absolute; width: 4px; height: 135px; background: rgba(255, 255, 255, 0.1); top: 0; left: 58px; transform: translateZ(0px); z-index: 3; }
+        .tube { position: absolute; width: 3px; height: 110px; background: rgba(255, 255, 255, 0.1); top: 0; left: 48.5px; transform: translateZ(0px); z-index: 3; }
 
         .glass { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; z-index: 4; }
         .glass .face { position: absolute; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(255, 255, 255, 0.2); outline: 1px solid transparent; box-shadow: inset 0 0 15px rgba(255,255,255,0.05); }
-        .glass .front, .glass .back { width: 120px; height: 140px; }
-        .glass .left, .glass .right { width: 50px; height: 140px; left: 35px; }
-        .glass .top, .glass .bottom { width: 120px; height: 50px; top: 45px; }
-        .glass .front  { transform: translateZ(25px); }
-        .glass .back   { transform: rotateY(180deg) translateZ(25px); }
-        .glass .left   { transform: rotateY(-90deg) translateZ(60px); background: rgba(255,255,255,0.02); }
-        .glass .right  { transform: rotateY(90deg) translateZ(60px); background: rgba(255,255,255,0.05); }
-        .glass .top    { transform: rotateX(90deg) translateZ(70px); border-bottom: none; }
-        .glass .bottom { transform: rotateX(-90deg) translateZ(70px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.9); }
+        .glass .front, .glass .back { width: 100px; height: 120px; }
+        .glass .left, .glass .right { width: 40px; height: 120px; left: 30px; }
+        .glass .top, .glass .bottom { width: 100px; height: 40px; top: 40px; }
+        .glass .front  { transform: translateZ(20px); }
+        .glass .back   { transform: rotateY(180deg) translateZ(20px); }
+        .glass .left   { transform: rotateY(-90deg) translateZ(50px); background: rgba(255,255,255,0.02); }
+        .glass .right  { transform: rotateY(90deg) translateZ(50px); background: rgba(255,255,255,0.05); }
+        .glass .top    { transform: rotateX(90deg) translateZ(60px); border-bottom: none; }
+        .glass .bottom { transform: rotateX(-90deg) translateZ(60px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.9); }
 
-        /* Etiqueta Negra R* CORREGIDA (Profundidad Z exacta) */
+        /* Etiqueta Negra R* CORREGIDA */
         .bottle-label {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%) translateZ(26px);
-            width: 60px; height: 60px; background: #000000; border: 1px solid var(--blue-steel);
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%) translateZ(21px);
+            width: 50px; height: 50px; background: #000000; border: 1px solid var(--blue-steel);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             z-index: 5; box-shadow: 0 4px 15px rgba(0,0,0,0.8); transition: all 0.3s ease;
         }
         .card:hover .bottle-label { box-shadow: 0 0 15px rgba(74, 124, 255, 0.4); }
-        
-        .bottle-label .logo-r-star-label { 
-            width: 35px; height: 35px; border: 1px solid var(--white-pure); border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1rem; color: white; position: relative; 
-        }
+        .bottle-label .logo-r-star-label { width: 30px; height: 30px; border: 1px solid var(--white-pure); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.8rem; color: white; position: relative; }
         .bottle-label .logo-r-star-label span { position: relative; top: 1px; }
-        .bottle-label .logo-r-star-label sup { font-size: 0.6rem; position: absolute; top: 3px; right: 3px; }
-
-        /* LOGO GLOBAL FIJO (SIEMPRE VISIBLE Y CENTRADO) */
-        .global-logo-r-star {
-            position: fixed; top: 2rem; left: 50%; transform: translateX(-50%);
-            width: 40px; height: 40px; border: 1px solid var(--blue-steel); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.1rem;
-            background: rgba(3, 7, 14, 0.9); color: var(--blue-steel); z-index: 1000;
-            box-shadow: 0 0 15px rgba(74, 124, 255, 0.3);
-        }
-        .global-logo-r-star span { position: relative; top: 1px; }
-        .global-logo-r-star sup { font-size: 0.6rem; position: absolute; top: 5px; right: 5px; }
+        .bottle-label .logo-r-star-label sup { font-size: 0.5rem; position: absolute; top: 2px; right: 2px; }
 
         /* METADATOS DEL CATÁLOGO */
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; width: 100%; border-bottom: 1px solid var(--tech-line); padding-bottom: 0.5rem;}
@@ -315,7 +308,7 @@
         .chatbot-window {
             position: fixed; bottom: 100px; right: 30px;
             width: 350px; max-height: 500px; height: 70vh;
-            background: rgba(5, 10, 18, 0.95); backdrop-filter: blur(20px);
+            background: rgba(3, 7, 14, 0.95); backdrop-filter: blur(20px);
             border: 1px solid var(--tech-line-strong);
             display: flex; flex-direction: column; z-index: 1000;
             opacity: 0; pointer-events: none; transform: translateY(20px);
@@ -374,13 +367,13 @@
             
             .left-pane { 
                 width: 100%; position: relative; height: auto; 
-                padding: 6rem 2rem 2rem 2rem; pointer-events: auto; 
+                padding: 4rem 2rem 2rem 2rem; pointer-events: auto; 
                 align-items: center; text-align: center;
             }
             .top-nav { flex-direction: column; gap: 1rem; align-items: center; margin-bottom: 2rem; }
             .top-nav div { text-align: center !important; }
             
-            .giant-text { font-size: 15vw; margin-top: 2vh; align-items: center; }
+            .giant-text { font-size: 14vw; margin-top: 2vh; align-items: center; }
             .giant-text span:nth-child(2) { margin-left: 0; }
             
             .tech-subtitle { justify-content: center; text-align: center; }
@@ -399,13 +392,12 @@
             .chatbot-launcher { bottom: 20px; right: 20px; width: 50px; height: 50px; }
             .chatbot-window { width: 90vw; right: 5vw; bottom: 85px; height: 60vh; }
             .volumetric-spotlight { width: 150vw; }
-            .global-logo-r-star { top: 1.5rem; width: 35px; height: 35px; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- STAGE LIGHTING CON EFECTO ROTO Y PARTÍCULAS -->
+    <!-- STAGE LIGHTING CON EFECTO ROTO Y PARTÍCULAS MEJORADAS -->
     <div class="cinematic-stage">
         <div class="volumetric-spotlight"></div>
         <div class="hard-beam"></div>
@@ -421,11 +413,6 @@
         <div class="cross c-br"></div>
         <div class="frame-line-h"></div>
         <div class="frame-line-v"></div>
-    </div>
-
-    <!-- LOGO GLOBAL FIJO -->
-    <div class="global-logo-r-star">
-        <span>R</span><sup>*</sup>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -450,6 +437,7 @@
                     FÓRMULAS QUE ALTERAN TODO. DISEÑADO EN COLOMBIA. CREADO SOLO PARA LOS AUDACES.
                 </p>
                 
+                <!-- BOTÓN DE CONTACTO INTEGRADO -->
                 <a href="https://wa.me/573042885479" target="_blank" class="contact-btn">
                     <svg style="width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                     CONTACTO
@@ -466,6 +454,7 @@
                     <input type="text" id="searchInput" class="search-input tech-font" placeholder="BUSCAR POR REFERENCIA O CASA...">
                 </div>
                 
+                <!-- FILA DE FILTROS: CASA Y FAMILIA OLFATIVA -->
                 <div class="filters-row">
                     <div class="select-wrapper">
                         <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -597,7 +586,6 @@
                 const cardHTML = `
                     <div class="card">
                         <div class="scene">
-                            <!-- BOTELLA 3D CORREGIDA (MEDIDAS ORIGINALES) -->
                             <div class="bottle-3d">
                                 <div class="cap">
                                     <div class="face front"></div><div class="face back"></div>
@@ -661,10 +649,10 @@
                 if (selectedNota !== "") {
                     const allNotes = (p.salida + " " + p.corazon + " " + p.fondo).toLowerCase();
                     let keywords = [];
-                    if (selectedNota === "dulce") keywords = ["vainilla", "haba tonka", "praliné", "azúcar", "caramelo", "cacao", "chocolate", "canela", "dulce"];
+                    if (selectedNota === "dulce") keywords = ["vainilla", "haba tonka", "praliné", "azúcar", "caramelo", "cacao", "chocolate", "canela"];
                     if (selectedNota === "amaderado") keywords = ["cedro", "cuero", "sándalo", "vetiver", "musgo", "abedul", "madera", "incienso"];
-                    if (selectedNota === "citrico") keywords = ["limón", "bergamota", "toronja", "mandarina", "naranja", "lima", "cítricos", "citrico"];
-                    if (selectedNota === "acuatico") keywords = ["marinas", "calone", "aquozone", "agua", "sal", "acuáticas", "marino", "acuatico"];
+                    if (selectedNota === "citrico") keywords = ["limón", "bergamota", "toronja", "mandarina", "naranja", "lima", "cítricos"];
+                    if (selectedNota === "acuatico") keywords = ["marinas", "calone", "aquozone", "agua", "sal", "acuáticas", "marino"];
                     
                     matchesNota = keywords.some(kw => allNotes.includes(kw));
                 }
@@ -680,7 +668,7 @@
         renderGrid(perfumes);
 
         // ==========================================
-        // LÓGICA DEL CHATBOT ORUM AI
+        // LÓGICA DEL CHATBOT ORUM AI (FLUJO ASEGURADO)
         // ==========================================
         const chatbotBtn = document.getElementById('chatbotBtn');
         const chatbotWindow = document.getElementById('chatbotWindow');
@@ -784,7 +772,7 @@
                 btnRestart.classList.add('chat-option-btn');
                 btnRestart.textContent = "REINICIAR ESCÁNER";
                 btnRestart.onclick = () => {
-                    initChat(); // Reinicia correctamente el chat
+                    initChat(); 
                 };
                 chatOptions.appendChild(btnRestart);
 
