@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ORUM | PERFUMERÍA HUD</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -136,7 +136,7 @@
         }
         .left-pane > * { pointer-events: auto; }
 
-        .top-nav { display: flex; justify-content: space-between; margin-bottom: 8vh; }
+        .top-nav { display: flex; justify-content: space-between; margin-bottom: 8vh; width: 100%; }
         .top-nav div { line-height: 1.6; }
 
         .giant-text {
@@ -146,7 +146,7 @@
         }
         .giant-text span:nth-child(2) { color: var(--blue-steel); margin-left: 10%; }
 
-        .tech-subtitle { display: flex; align-items: center; gap: 15px; margin-bottom: 2rem; color: var(--blue-steel); font-weight: 700; }
+        .tech-subtitle { display: flex; align-items: center; gap: 15px; margin-bottom: 2rem; color: var(--blue-steel); font-weight: 700; width: 100%; }
         .tech-subtitle::after { content: ""; flex-grow: 1; height: 1px; background: var(--tech-line); }
 
         .tech-paragraph {
@@ -261,16 +261,17 @@
         .glass .top    { transform: rotateX(90deg) translateZ(60px); border-bottom: none; }
         .glass .bottom { transform: rotateX(-90deg) translateZ(60px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.9); }
 
-        .bottle-label {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%) translateZ(21px);
-            width: 50px; height: 50px; background: #000000; border: 1px solid var(--blue-steel);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 5; box-shadow: 0 4px 15px rgba(0,0,0,0.8); transition: all 0.3s ease;
+        /* LOGO ESTRELLA MINIMALISTA */
+        .logo-r-star {
+            position: absolute; top: 2rem; left: 50%; transform: translateX(-50%);
+            width: 40px; height: 40px; border: 1px solid var(--blue-steel); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.1rem;
+            background: rgba(3, 7, 14, 0.9); color: var(--blue-steel); z-index: 100;
+            box-shadow: 0 0 15px rgba(74, 124, 255, 0.3);
         }
-        .card:hover .bottle-label { box-shadow: 0 0 15px rgba(74, 124, 255, 0.4); }
-        .bottle-label .logo-r-star-label { width: 30px; height: 30px; border: 1px solid var(--white-pure); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 0.8rem; color: white; position: relative; }
-        .bottle-label .logo-r-star-label span { position: relative; top: 1px; }
-        .bottle-label .logo-r-star-label sup { font-size: 0.5rem; position: absolute; top: 2px; right: 2px; }
+        .logo-r-star span { position: relative; top: 1px; }
+        .logo-r-star sup { font-size: 0.6rem; position: absolute; top: 5px; right: 5px; }
 
         /* METADATOS DEL CATÁLOGO */
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; width: 100%; border-bottom: 1px solid var(--tech-line); padding-bottom: 0.5rem;}
@@ -307,7 +308,7 @@
         .chatbot-window {
             position: fixed; bottom: 100px; right: 30px;
             width: 350px; max-height: 500px; height: 70vh;
-            background: rgba(5, 10, 18, 0.95); backdrop-filter: blur(20px);
+            background: rgba(3, 7, 14, 0.95); backdrop-filter: blur(20px);
             border: 1px solid var(--tech-line-strong);
             display: flex; flex-direction: column; z-index: 1000;
             opacity: 0; pointer-events: none; transform: translateY(20px);
@@ -359,19 +360,44 @@
         .chat-wa-link { display: inline-block; color: #000; background: var(--blue-steel); padding: 6px 10px; text-decoration: none; font-size: 0.5rem; font-weight: 700; text-align: center;}
 
         /* =========================================
-           RESPONSIVE MOBILE 
+           RESPONSIVE MOBILE / TABLET COMPLETO
            ========================================= */
         @media (max-width: 1000px) {
             .blueprint-frame { display: none; }
             .content-layer { flex-direction: column; }
-            .left-pane { width: 100%; position: relative; height: auto; padding: 4rem 2rem 2rem 2rem; pointer-events: auto; }
-            .right-pane { width: 100%; margin-left: 0; padding: 2rem; border-left: none; }
-            .frame-line-v { display: none; }
-            .giant-text { font-size: 13vw; }
-            .tech-paragraph { max-width: 100%; }
-            .chatbot-window { width: 90vw; right: 5vw; bottom: 90px; }
-            .volumetric-spotlight { width: 100vw; }
+            
+            /* Ajuste del panel izquierdo para móviles */
+            .left-pane { 
+                width: 100%; position: relative; height: auto; 
+                padding: 6rem 2rem 2rem 2rem; pointer-events: auto; 
+                align-items: center; text-align: center;
+            }
+            .top-nav { flex-direction: column; gap: 1rem; align-items: center; margin-bottom: 2rem; }
+            .top-nav div { text-align: center !important; }
+            
+            .giant-text { font-size: 14vw; margin-top: 2vh; align-items: center; }
+            .giant-text span:nth-child(2) { margin-left: 0; }
+            
+            .tech-subtitle { justify-content: center; text-align: center; }
+            .tech-subtitle::after { display: none; }
+            
+            .tech-paragraph { max-width: 100%; margin-bottom: 2rem; border-left: none; border-top: 2px solid var(--blue-steel); padding-left: 0; padding-top: 1rem; }
+            
+            .contact-btn { width: 100%; justify-content: center; }
+
+            /* Ajuste del panel derecho para móviles */
+            .right-pane { width: 100%; margin-left: 0; padding: 2rem 1.5rem; border-left: none; margin-top: 0; }
             .filters-row { flex-direction: column; gap: 0; }
+            .search-section-title { justify-content: center; font-size: 0.75rem; text-align: center;}
+            
+            .grid { grid-template-columns: 1fr; gap: 2rem; }
+            .card { padding: 2rem 1.5rem; }
+
+            /* Chatbot & UI adjustments */
+            .chatbot-launcher { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+            .chatbot-window { width: 90vw; right: 5vw; bottom: 85px; }
+            .volumetric-spotlight { width: 150vw; }
+            .logo-r-star { top: 1.5rem; width: 35px; height: 35px; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -427,6 +453,7 @@
 
         <!-- RIGHT PANE (CATALOG) -->
         <div class="right-pane">
+            
             <div class="search-container tech-font">
                 
                 <div class="input-wrapper">
@@ -462,7 +489,7 @@
 
     </div>
 
-    <!-- LOGO Y ELEMENTOS FIXADOS -->
+    <!-- LOGO ESTRELLA -->
     <div class="logo-r-star">
         <span>R</span><sup>*</sup>
     </div>
