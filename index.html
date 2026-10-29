@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ORUM | PERFUMERÍA EDITORIAL</title>
+    
+    <!-- Fuentes Tipográficas: Playfair Display (Serif Display) + Space Mono & Inter (Grotesque/Mono) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR DE NAVEGACIÓN -->
+    <header class="top-navbar">
+        <div class="nav-brand">
+            <img src="C:\Users\nicol\Desktop\001 - NICOLAS\02 - ORUM PERFUMERIA\003 - ORUM PERFUMERIA - PAGE\PAGE V03\Imagenes\ORUM Logo-02.png" alt="ORUM Logo" class="nav-logo-img">
+        </div>
+        <nav class="nav-links">
+            <button class="nav-link active" onclick="switchPage('home-page')">INICIO</button>
+            <button class="nav-link" onclick="switchPage('catalog-page')">CATÁLOGO</button>
+            <button class="nav-link" onclick="switchPage('about-page')">SOBRE NOSOTROS</button>
+            <button class="nav-link" onclick="switchPage('shipping-page')">ENVÍOS</button>
+        </nav>
+    </header>
+
+    <!-- MARCO EDITORIAL TÉCNICO -->
+    <div class="blueprint-frame">
+        <div class="cross c-tl"></div>
+        <div class="cross c-tr"></div>
+        <div class="cross c-bl"></div>
+        <div class="cross c-br"></div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL DE PÁGINAS -->
+    <main class="main-container">
+
+        <!-- 1. PÁGINA DE INICIO -->
+        <section id="home-page" class="page-section active">
+            <div class="hero-center">
+                <img src="C:\Users\nicol\Desktop\001 - NICOLAS\02 - ORUM PERFUMERIA\003 - ORUM PERFUMERIA - PAGE\PAGE V03\Imagenes\ORUM Logo-02.png" alt="ORUM Perfumería" class="hero-logo">
+                <p class="hero-subtext">PRESENCIA QUE SE SIENTE</p>
+                <button class="editorial-btn hero-btn" onclick="switchPage('catalog-page')">EXPLORAR CATÁLOGO</button>
+            </div>
+        </section>
+
+        <!-- 2. PÁGINA CATÁLOGO -->
+        <section id="catalog-page" class="page-section">
+            <div class="catalog-layout">
+                <!-- Panel Izquierdo Fijo/Editorial -->
+                <aside class="catalog-aside">
+                    <h1 class="display-title">COLECCIÓN <br><em>COMPLETA</em></h1>
+                    <p class="aside-paragraph">
+                        Fragancias de inspiración creadas con precisión. Mismo aroma, a un mejor precio.
+                    </p>
+                    <a href="https://wa.me/573042885479" target="_blank" class="editorial-btn btn-full">
+                        <span>CONTACTO DIRECTO</span>
+                    </a>
+                </aside>
+
+                <!-- Panel Derecho / Grid de Perfumes -->
+                <div class="catalog-content">
+                    <div class="filter-bar">
+                        <div class="input-wrapper">
+                            <input type="text" id="searchInput" class="editorial-input" placeholder="BUSCAR POR REFERENCIA O CASA...">
+                        </div>
+                        <div class="filters-row">
+                            <div class="select-wrapper">
+                                <select id="casaSelect" class="editorial-select">
+                                    <option value="">CASAS DISPONIBLES (TODAS)</option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper">
+                                <select id="notasSelect" class="editorial-select">
+                                    <option value="">FAMILIA OLFATIVA (TODAS)</option>
+                                    <option value="dulce">DULCE / GOURMAND</option>
+                                    <option value="amaderado">AMADERADO / CUERO</option>
+                                    <option value="citrico">CÍTRICO / FRESCO</option>
+                                    <option value="acuatico">ACUÁTICO / MARINO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid de Perfumes -->
+                    <div class="catalog-grid" id="catalog-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PÁGINA SOBRE NOSOTROS -->
+        <section id="about-page" class="page-section">
+            <div class="editorial-wrapper">
+                <div class="about-grid">
+                    <div class="about-header">
+                        <span class="section-tag">[ SOBRE LA MARCA ]</span>
+                        <h2 class="display-title">ORUM <br><em>PERFUMERÍA</em></h2>
+                    </div>
+                    <div class="about-content">
+                        <p class="lead-text">
+                            En ORUM perfumería diseñamos y seleccionamos perfumes de inspiración de alta calidad. Creemos firmemente en ofrecer una experiencia sensorial superior: <strong>Mismo aroma, a un mejor precio. Presencia que se siente.</strong>
+                        </p>
+                        
+                        <div class="spec-table">
+                            <div class="spec-row">
+                                <span class="spec-label">PRESENTACIÓN</span>
+                                <span class="spec-value">Frascos de 50 ML</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">PRECIO UNIFORME</span>
+                                <span class="spec-value">$32.000 COP</span>
+                            </div>
+                            <div class="spec-row">
+                                <span class="spec-label">ENFOQUE</span>
+                                <span class="spec-value">Alta Fijeza & Calidad Olfativa</span>
+                            </div>
+                        </div>
+
+                        <div class="social-links-container">
+                            <a href="https://wa.me/573042885479" target="_blank" class="editorial-btn">WHATSAPP: +57 304 2885479</a>
+                            <a href="https://www.instagram.com/orumperfumeria/" target="_blank" class="editorial-btn outline">INSTAGRAM: @ORUMPERFUMERIA</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PÁGINA ENVÍOS -->
+        <section id="shipping-page" class="page-section">
+            <div class="editorial-wrapper">
+                <div class="shipping-card">
+                    <span class="section-tag">[ POLÍTICA DE ENTREGAS ]</span>
+                    <h2 class="display-title">DESPACHOS & <br><em>COBERTURA</em></h2>
+                    
+                    <div class="shipping-info-box">
+                        <div class="shipping-price-tag">$7.000 COP</div>
+                        <p class="shipping-scope-title">COBERTURA DE ENVÍO LOCAL</p>
+                        <p class="shipping-desc">
+                            Realizamos envíos <strong>ÚNICAMENTE A MEDELLÍN Y ÁREA METROPOLITANA</strong>.
+                        </p>
+                        <div class="coverage-bar">
+                            <span>DESDE: NIQUÍA</span>
+                            <span class="line-divider"></span>
+                            <span>HASTA: SABANETA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- CHATBOT LAUNCHER & WINDOW (ORUM AI) -->
+    <div class="chatbot-launcher" id="chatbotBtn">
+        <span>AI</span>
+    </div>
+
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chat-header">
+            <span class="title">ORUM AI // ASISTENTE</span>
+            <button class="close-chat" id="closeChatBtn">✕</button>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-options" id="chatOptions"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
