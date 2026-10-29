@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ORUM | PERFUMERÍA EDITORIAL</title>
+    
+    <!-- Fuentes Tipográficas: Syne (Sans-Serif Retro-Futurista) + Space Mono + Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- RETÍCULA TÉCNICA GLOBAL -->
+    <div class="swiss-grid-overlay">
+        <div class="grid-line v-line-1"></div>
+        <div class="grid-line v-line-2"></div>
+        <div class="grid-line v-line-3"></div>
+        <div class="grid-line h-line-1"></div>
+        <div class="cross-marker c-top-left">+</div>
+        <div class="cross-marker c-top-right">+</div>
+    </div>
+
+    <!-- BARRA SUPERIOR DE NAVEGACIÓN (OPTIMIZADA PARA MÓVIL) -->
+    <header class="top-navbar">
+        <div class="nav-brand">
+            <img src="images/logo.png" alt="ORUM Logo" class="nav-logo-img" id="navLogo">
+            <span class="nav-tagline">SYS.V03 // EDITORIAL</span>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-link active" onclick="switchPage('home-page')"><span class="nav-idx">01</span> INICIO</button>
+            <button class="nav-link" onclick="switchPage('catalog-page')"><span class="nav-idx">02</span> CATÁLOGO</button>
+            <button class="nav-link" onclick="switchPage('about-page')"><span class="nav-idx">03</span> NOSOTROS</button>
+            <button class="nav-link" onclick="switchPage('shipping-page')"><span class="nav-idx">04</span> ENVÍOS</button>
+        </nav>
+    </header>
+
+    <main class="main-container">
+
+        <!-- 1. PÁGINA DE INICIO -->
+        <section id="home-page" class="page-section active">
+            <div class="hero-center">
+                <div class="hero-logo-wrapper">
+                    <img src="images/logo.png" alt="ORUM Perfumería" class="hero-logo">
+                    <div class="hero-glow-ring"></div>
+                </div>
+                <p class="hero-subtext">MISMO AROMA, A UN MEJOR PRECIO — PRESENCIA QUE SE SIENTE</p>
+                <div class="hero-actions">
+                    <button class="editorial-btn hero-btn" onclick="switchPage('catalog-page')">
+                        <span>EXPLORAR CATÁLOGO</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. PÁGINA CATÁLOGO (TEMA CLARO EDITORIAL) -->
+        <section id="catalog-page" class="page-section light-theme">
+            <div class="catalog-layout">
+                <aside class="catalog-aside">
+                    <span class="section-idx">02 // ARCHIVO</span>
+                    <h1 class="display-title">CATÁLOGO <br>COMPLETO</h1>
+                    <p class="aside-paragraph">
+                        Perfumes de inspiración formulados para maximizar la fijación y presencia olfativa. Frascos de 50ML a un precio estandarizado.
+                    </p>
+                    
+                    <div class="quick-specs">
+                        <div class="q-spec">
+                            <svg class="q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            <div>
+                                <span class="q-label">PRECIO ÚNICO</span>
+                                <span class="q-val">$32.000 COP</span>
+                            </div>
+                        </div>
+                        <div class="q-spec">
+                            <svg class="q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                            <div>
+                                <span class="q-label">FORMATO</span>
+                                <span class="q-val">50 ML EDP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/573042885479" target="_blank" class="editorial-btn btn-full">
+                        <span>CONTACTO DIRECTO</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    </a>
+                </aside>
+
+                <div class="catalog-content">
+                    <div class="filter-bar">
+                        <div class="input-wrapper">
+                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="text" id="searchInput" class="editorial-input" placeholder="BUSCAR POR REFERENCIA O CASA...">
+                        </div>
+                        <div class="filters-row">
+                            <div class="select-wrapper">
+                                <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                                <select id="casaSelect" class="editorial-select">
+                                    <option value="">CASAS DISPONIBLES (TODAS)</option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper">
+                                <svg class="filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                                <select id="notasSelect" class="editorial-select">
+                                    <option value="">FAMILIA OLFATIVA (TODAS)</option>
+                                    <option value="dulce">DULCE / GOURMAND</option>
+                                    <option value="amaderado">AMADERADO / CUERO</option>
+                                    <option value="citrico">CÍTRICO / FRESCO</option>
+                                    <option value="acuatico">ACUÁTICO / MARINO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="catalog-grid" id="catalog-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PÁGINA SOBRE NOSOTROS -->
+        <section id="about-page" class="page-section">
+            <div class="editorial-wrapper">
+                <span class="section-idx">03 // MANIFIESTO Y FILOSOFÍA</span>
+                <h2 class="display-title">ORUM <br>PERFUMERÍA</h2>
+                
+                <div class="about-grid-modular">
+                    <div class="about-module">
+                        <div class="module-header">
+                            <svg class="mod-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            <h3>QUIÉNES SOMOS</h3>
+                        </div>
+                        <p>
+                            ORUM Perfumería nace en Colombia con la firme convicción de democratizar el acceso a la alta perfumería. Nos especializamos en fragancias de inspiración que capturan la esencia y fijación de los perfumes de diseñador.
+                        </p>
+                    </div>
+
+                    <div class="about-module">
+                        <div class="module-header">
+                            <svg class="mod-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <h3>QUÉ HACEMOS</h3>
+                        </div>
+                        <p>
+                            Mantenemos un estándar riguroso en concentraciones de aceites esenciales para asegurar proyección duradera, eliminando sobrecostos de empaques para enfocarnos puramente en la calidad del aroma.
+                        </p>
+                    </div>
+
+                    <div class="about-module full-width">
+                        <div class="module-header">
+                            <svg class="mod-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            <h3>NUESTROS PERFUMES & PRECIOS</h3>
+                        </div>
+                        <div class="spec-matrix">
+                            <div class="matrix-item">
+                                <span class="m-title">PRESENTACIÓN ÚNICA</span>
+                                <span class="m-desc">Frascos en vidrio de alta densidad de <strong>50 ML</strong>.</span>
+                            </div>
+                            <div class="matrix-item">
+                                <span class="m-title">PRECIO ESTÁNDAR</span>
+                                <span class="m-desc"><strong>$32.000 COP</strong> para cualquier referencia del catálogo.</span>
+                            </div>
+                            <div class="matrix-item">
+                                <span class="m-title">PROMESA DE VALOR</span>
+                                <span class="m-desc">Mismo aroma, a un mejor precio. Presencia que se siente.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-strip">
+                    <a href="https://wa.me/573042885479" target="_blank" class="editorial-btn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        <span>WHATSAPP // +57 304 2885479</span>
+                    </a>
+                    <a href="https://www.instagram.com/orumperfumeria/" target="_blank" class="editorial-btn outline">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <span>INSTAGRAM // @ORUMPERFUMERIA</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PÁGINA ENVÍOS -->
+        <section id="shipping-page" class="page-section">
+            <div class="editorial-wrapper">
+                <span class="section-idx">04 // POLÍTICA Y LOGÍSTICA</span>
+                <h2 class="display-title">DESPACHOS & <br>COBERTURA LOCAL</h2>
+                
+                <div class="shipping-grid">
+                    <div class="shipping-banner-card">
+                        <div class="shipping-badge">TARIFA ÚNICA LOCAL</div>
+                        <div class="shipping-price">$7.000 <span>COP</span></div>
+                        <p class="shipping-note">Costo fijo sin importar la cantidad de fragancias en tu pedido.</p>
+                    </div>
+
+                    <div class="shipping-details-card">
+                        <div class="module-header">
+                            <svg class="mod-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <h3>ZONA EXCLUSIVA DE COBERTURA</h3>
+                        </div>
+                        <p class="coverage-statement">
+                            Nuestra logística de entrega directa opera <strong>ÚNICAMENTE EN MEDELLÍN Y EL ÁREA METROPOLITANA</strong>.
+                        </p>
+
+                        <div class="coverage-route-visual">
+                            <div class="route-node">
+                                <span class="node-point"></span>
+                                <span class="node-label">NIQUÍA (BELLO)</span>
+                            </div>
+                            <div class="route-line"></div>
+                            <div class="route-node">
+                                <span class="node-point"></span>
+                                <span class="node-label">MEDELLÍN</span>
+                            </div>
+                            <div class="route-line"></div>
+                            <div class="route-node">
+                                <span class="node-point"></span>
+                                <span class="node-label">SABANETA</span>
+                            </div>
+                        </div>
+
+                        <ul class="coverage-cities-list">
+                            <li><span>01</span> Bello & Niquía</li>
+                            <li><span>02</span> Medellín (Todas las comunas)</li>
+                            <li><span>03</span> Envigado</li>
+                            <li><span>04</span> Itagüí</li>
+                            <li><span>05</span> Sabaneta</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- CHATBOT ORUM AI -->
+    <div class="chatbot-launcher" id="chatbotBtn">
+        <svg class="bot-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path><rect x="4" y="8" width="16" height="12" rx="2"></rect><circle cx="9" cy="13" r="1"></circle><circle cx="15" cy="13" r="1"></circle></svg>
+    </div>
+
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chat-header">
+            <span class="title">ORUM AI // ASISTENTE</span>
+            <button class="close-chat" id="closeChatBtn">✕</button>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-options" id="chatOptions"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
